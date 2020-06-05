@@ -12,7 +12,6 @@ using Blog.Core.Model;
 using Blog.Core.Model.ViewModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -185,10 +184,6 @@ namespace Blog.Core.Controllers
 
                     _requirement.Permissions = list;
                 }
-
-                //用户标识
-                var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);
-                identity.AddClaims(claims);
 
                 var token = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
                 return new MessageModel<TokenInfoViewModel>()

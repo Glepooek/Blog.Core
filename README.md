@@ -1,6 +1,6 @@
 ﻿Dev Build:: 
 
-  [![Front](https://img.shields.io/badge/Front-VUE-d.svg)](#) [![sdk](https://img.shields.io/badge/sdk-3.1-d.svg)](#)  [![Build status](https://github.com/anjoy8/blog.core/workflows/.NET%20Core/badge.svg)](https://github.com/anjoy8/Blog.Core/actions) [![codecov](https://codecov.io/gh/anjoy8/Blog.Core/branch/master/graph/badge.svg)](https://codecov.io/gh/anjoy8/Blog.Core)  [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/anjoy8/Blog.Core/blob/master/LICENSE) [![Language](https://img.shields.io/badge/language-csharp-d.svg)](#) 
+  [![Front](https://img.shields.io/badge/Front-VUE-d.svg)](#) [![sdk](https://img.shields.io/badge/sdk-3.1-d.svg)](#)  [![Build status](https://github.com/anjoy8/blog.core/workflows/.NET%20Core/badge.svg)](https://github.com/anjoy8/Blog.Core/actions) [![codecov](https://codecov.io/gh/anjoy8/Blog.Core/branch/master/graph/badge.svg)](https://codecov.io/gh/anjoy8/Blog.Core)  [![License MIT](https://img.shields.io/badge/license-Apache-blue.svg?style=flat-square)](https://github.com/anjoy8/Blog.Core/blob/master/LICENSE) [![Language](https://img.shields.io/badge/language-csharp-d.svg)](#) 
 [![star this repo](http://githubbadges.com/star.svg?user=anjoy8&repo=blog.core&style=flat)](https://github.com/boennemann/badges) 
 [![fork this repo](http://githubbadges.com/fork.svg?user=anjoy8&repo=blog.core&style=flat)](https://github.com/boennemann/badges/fork) 
 [![博客园](https://img.shields.io/badge/博客园-老张的哲学-brightgreen.svg)](https://www.cnblogs.com/laozhang-is-phi/)
@@ -10,8 +10,8 @@
 &nbsp;
 
 
-![Logo](https://github.com/anjoy8/Blog.Core/blob/master/Blog.Core/wwwroot/logocore.png)
-![MVP](https://raw.githubusercontent.com/anjoy8/Blog.Core/master/Blog.Core/wwwroot/MVP_Logo_Horizontal_Preferred_Cyan300_CMYK_72ppi.png)
+![Logo](http://apk.neters.club/logocore.png)
+![MVP](http://apk.neters.club/MVP_Logo_Horizontal_Preferred_Cyan300_CMYK_72ppi.png)
 
 
 BCVP（Blog.Core&Vue Project）开箱即用的企业级前后端分离【 .NET Core3.1 Api + Vue 2.x + RBAC】权限框架。 
@@ -72,7 +72,7 @@ BCVP（Blog.Core&Vue Project）开箱即用的企业级前后端分离【 .NET C
 ### 系统架构图
 
 
-![系统架构图](https://github.com/anjoy8/Blog.Core/blob/master/Blog.Core.System.Architecture.png)
+![系统架构图](http://apk.neters.club/Blog.Core.System.Architecture.png)
 
 &nbsp;
 
@@ -86,7 +86,7 @@ BCVP（Blog.Core&Vue Project）开箱即用的企业级前后端分离【 .NET C
 
 
 
-<div align=center><img width="500" src="https://github.com/anjoy8/Blog.Core/blob/master/Blog.Core/wwwroot/JMeterTest.png" /></div>
+<div align=center><img width="500" src="http://apk.neters.club/JMeterTest.png" /></div>
 
 这只是 .netCore 后端部分，前端部分请看我的另三个Vue工程项目
  
@@ -108,7 +108,7 @@ BCVP（Blog.Core&Vue Project）开箱即用的企业级前后端分离【 .NET C
 
 #### 不要再使用 .sql 文件了，用下边动图的方法，直接 seed data.
 
-数据查看：[Blog.Core.Data.json](https://github.com/anjoy8/Blog.Data.Share/tree/master/Blog.Core.Data.json)
+数据查看：[Blog.Core.Data.json](https://github.com/anjoy8/Blog.Data.Share/tree/master/BlogCore.Data.json)
 
 文章讲解：[支持多种数据库 & 快速数据库生成](https://www.cnblogs.com/laozhang-is-phi/p/10718755.html)
  
@@ -117,7 +117,7 @@ BCVP（Blog.Core&Vue Project）开箱即用的企业级前后端分离【 .NET C
  
 
 
-![操作流程](https://github.com/anjoy8/Blog.Core/blob/master/Blog.Core/wwwroot/operateFlow.gif)
+![操作流程](http://apk.neters.club/operateFlow.gif)
 
 
 &nbsp;

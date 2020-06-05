@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 namespace Blog.Core
 {
     /// <summary>
@@ -77,6 +74,15 @@ namespace Blog.Core
         {
             if (thisValue != null) return thisValue.ToString().Trim();
             return "";
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="thisValue"></param>
+        /// <returns></returns>
+        public static bool IsNotEmptyOrNull(this object thisValue)
+        {
+            return ObjToString(thisValue) != "";
         }
         /// <summary>
         /// 

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Blog.Core.Common;
 using Blog.Core.Common.Helper;
 using Blog.Core.IServices;
 using Blog.Core.Model;
@@ -61,7 +58,7 @@ namespace Blog.Core.Controllers
                 key = "";
             }
 
-            Expression<Func<BlogArticle, bool>> whereExpression = a =>(a.bcategory == bcategory && a.IsDeleted == false) && ((a.btitle != null && a.btitle.Contains(key)) || (a.bcontent != null && a.bcontent.Contains(key)));
+            Expression<Func<BlogArticle, bool>> whereExpression = a => (a.bcategory == bcategory && a.IsDeleted == false) && ((a.btitle != null && a.btitle.Contains(key)) || (a.bcontent != null && a.bcontent.Contains(key)));
 
             var pageModelBlog = await _blogArticleServices.QueryPage(whereExpression, page, intPageSize, " bID desc ");
 
@@ -133,6 +130,21 @@ namespace Blog.Core.Controllers
             };
         }
 
+        [HttpGet]
+        [Route("GoUrl")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GoUrl(int id)
+        {
+            var response = await _blogArticleServices.QueryById(id);
+            if (response != null && response.bsubmitter.IsNotEmptyOrNull())
+            {
+                response.btraffic += 1;
+                await _blogArticleServices.Update(response);
+                return Redirect(response.bsubmitter);
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// 获取博客测试信息 v2版本

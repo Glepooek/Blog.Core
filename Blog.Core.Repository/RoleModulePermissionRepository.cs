@@ -49,9 +49,9 @@ namespace Blog.Core.Repository
         }
 
         /// <summary>
-        /// ½ÇÉ«È¨ÏŞMap
-        /// RoleModulePermission, Module, Role Èı±íÁªºÏ
-        /// µÚËÄ¸öÀàĞÍ RoleModulePermission ÊÇ·µ»ØÖµ
+        /// è§’è‰²æƒé™Map
+        /// RoleModulePermission, Module, Role ä¸‰è¡¨è”åˆ
+        /// ç¬¬å››ä¸ªç±»å‹ RoleModulePermission æ˜¯è¿”å›å€¼
         /// </summary>
         /// <returns></returns>
         public async Task<List<RoleModulePermission>> RoleModuleMaps()
@@ -73,7 +73,20 @@ namespace Blog.Core.Repository
                 );
         }
 
+
+
+        /// <summary>
+        /// æŸ¥è¯¢å‡ºè§’è‰²-èœå•-æ¥å£å…³ç³»è¡¨å…¨éƒ¨Mapå±æ€§æ•°æ®
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<RoleModulePermission>> GetRMPMaps()
+        {
+            return await Db.Queryable<RoleModulePermission>()
+                .Mapper(rmp => rmp.Module, rmp => rmp.ModuleId)
+                .Mapper(rmp => rmp.Permission, rmp => rmp.PermissionId)
+                .Mapper(rmp => rmp.Role, rmp => rmp.RoleId)
+                .ToListAsync();
+        }
     }
 
 }
-

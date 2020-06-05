@@ -2,6 +2,7 @@
 using Autofac.Extras.DynamicProxy;
 using Blog.Core.AOP;
 using Blog.Core.Common;
+using Blog.Core.Model;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -85,9 +86,9 @@ namespace Blog.Core.Extensions
 
             //只能注入该类中的虚方法，且必须是public
             //这里仅仅是一个单独类无接口测试，不用过多追问
-            //builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(Love)))
-            //    .EnableClassInterceptors()
-            //    .InterceptedBy(cacheType.ToArray());
+            builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(Love)))
+                .EnableClassInterceptors()
+                .InterceptedBy(cacheType.ToArray());
             #endregion
 
             #region 单独注册一个含有接口的类，启用interface代理拦截

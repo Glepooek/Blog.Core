@@ -72,5 +72,10 @@ namespace Blog.Core.Services
         {
             return await _dal.RoleModuleMaps();
         }
+
+        public async Task<List<RoleModulePermission>> GetRMPMaps()
+        {
+            return await _dal.GetRMPMaps();
+        }
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 namespace Blog.Core.Extensions
 {
     /// <summary>
-    /// Cors 启动服务
+    /// 项目 启动服务
     /// </summary>
     public static class AppConfigSetup
     {
@@ -92,7 +92,7 @@ namespace Blog.Core.Extensions
                 }
 
                 // IP限流
-                if (!Appsettings.app(new string[] { "IpRateLimiting", "EnableEndpointRateLimiting" }).ObjToBool())
+                if (!Appsettings.app("Middleware", "IpRateLimit", "Enabled").ObjToBool())
                 {
                     Console.WriteLine($"IpRateLimiting: False");
                 }

@@ -1,5 +1,4 @@
-﻿using AspNetCoreRateLimit;
-using Autofac;
+﻿using Autofac;
 using Blog.Core.Common;
 using Blog.Core.Common.LogHelper;
 using Blog.Core.Extensions;
@@ -7,7 +6,7 @@ using Blog.Core.Filter;
 using Blog.Core.Hubs;
 using Blog.Core.IServices;
 using Blog.Core.Middlewares;
-using Blog.Core.Model.Models;
+using Blog.Core.Model.Seed;
 using Blog.Core.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -104,10 +103,10 @@ namespace Blog.Core
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyContext myContext, ITasksQzServices tasksQzServices, ISchedulerCenter schedulerCenter)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyContext myContext, ITasksQzServices tasksQzServices, ISchedulerCenter schedulerCenter, IHostApplicationLifetime lifetime)
         {
             // Ip限流,尽量放管道外层
-            app.UseIpRateLimiting();
+            app.UseIpLimitMildd();
             // 记录请求与返回数据 
             app.UseReuestResponseLog();
             // signalr 
@@ -153,10 +152,8 @@ namespace Blog.Core
             app.UseAuthentication();
             // 然后是授权中间件
             app.UseAuthorization();
-
             // 开启异常中间件，要放到最后
             //app.UseExceptionHandlerMidd();
-
             // 性能分析
             app.UseMiniProfiler();
 
@@ -171,10 +168,10 @@ namespace Blog.Core
 
             // 生成种子数据
             app.UseSeedDataMildd(myContext, Env.WebRootPath);
-
             // 开启QuartzNetJob调度服务
             app.UseQuartzJobMildd(tasksQzServices, schedulerCenter);
-
+            //服务注册
+            app.UseConsulMildd(Configuration, lifetime);
         }
 
     }

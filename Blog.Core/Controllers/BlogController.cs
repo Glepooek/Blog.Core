@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Blog.Core.Common.Helper;
@@ -146,6 +147,43 @@ namespace Blog.Core.Controllers
             return null;
         }
 
+        [HttpGet]
+        [Route("GetBlogsByTypesForMVP")]
+        [AllowAnonymous]
+        public async Task<MessageModel<List<BlogArticle>>> GetBlogsByTypesForMVP(string types = "", int id = 0)
+        {
+            if (types.IsNotEmptyOrNull())
+            {
+                var blogs = await _blogArticleServices.Query(d => d.bcategory != null && types.Contains(d.bcategory) && d.IsDeleted == false);
+                return new MessageModel<List<BlogArticle>>()
+                {
+                    msg = "获取成功",
+                    success = true,
+                    response = blogs
+                };
+            }
+
+            return new MessageModel<List<BlogArticle>>() { };
+        }
+
+        [HttpGet]
+        [Route("GetBlogByIdForMVP")]
+        [AllowAnonymous]
+        public async Task<MessageModel<BlogArticle>> GetBlogByIdForMVP(int id = 0)
+        {
+            if (id > 0)
+            {
+                return new MessageModel<BlogArticle>()
+                {
+                    msg = "获取成功",
+                    success = true,
+                    response = await _blogArticleServices.QueryById(id)
+                };
+            }
+
+            return new MessageModel<BlogArticle>() { };
+        }
+
         /// <summary>
         /// 获取博客测试信息 v2版本
         /// </summary>
@@ -175,8 +213,36 @@ namespace Blog.Core.Controllers
         /// <param name="blogArticle"></param>
         /// <returns></returns>
         [HttpPost]
-        [AllowAnonymous]
         public async Task<MessageModel<string>> Post([FromBody] BlogArticle blogArticle)
+        {
+            var data = new MessageModel<string>();
+
+            blogArticle.bCreateTime = DateTime.Now;
+            blogArticle.bUpdateTime = DateTime.Now;
+            blogArticle.IsDeleted = false;
+            blogArticle.bcategory = "技术博文";
+
+            var id = (await _blogArticleServices.Add(blogArticle));
+            data.success = id > 0;
+            if (data.success)
+            {
+                data.response = id.ObjToString();
+                data.msg = "添加成功";
+            }
+
+            return data;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="blogArticle"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("AddForMVP")]
+        [Authorize(Permissions.Name)]
+        public async Task<MessageModel<string>> AddForMVP([FromBody] BlogArticle blogArticle)
         {
             var data = new MessageModel<string>();
 
@@ -194,6 +260,44 @@ namespace Blog.Core.Controllers
 
             return data;
         }
+        /// <summary>
+        /// 更新博客信息
+        /// </summary>
+        /// <param name="BlogArticle"></param>
+        /// <returns></returns>
+        // PUT: api/User/5
+        [HttpPut]
+        [Route("Update")]
+        [Authorize(Permissions.Name)]
+        public async Task<MessageModel<string>> Put([FromBody] BlogArticle BlogArticle)
+        {
+            var data = new MessageModel<string>();
+            if (BlogArticle != null && BlogArticle.bID > 0)
+            {
+                var model = await _blogArticleServices.QueryById(BlogArticle.bID);
+
+                if (model != null)
+                {
+                    model.btitle = BlogArticle.btitle;
+                    model.bcategory = BlogArticle.bcategory;
+                    model.bsubmitter = BlogArticle.bsubmitter;
+                    model.bcontent = BlogArticle.bcontent;
+                    model.btraffic = BlogArticle.btraffic;
+
+                    data.success = await _blogArticleServices.Update(model);
+                    if (data.success)
+                    {
+                        data.msg = "更新成功";
+                        data.response = BlogArticle?.bID.ObjToString();
+                    }
+                }
+
+            }
+
+            return data;
+        }
+
+
 
         /// <summary>
         /// 删除博客
@@ -220,42 +324,6 @@ namespace Blog.Core.Controllers
 
             return data;
         }
-
-
-        /// <summary>
-        /// 更新博客信息
-        /// </summary>
-        /// <param name="BlogArticle"></param>
-        /// <returns></returns>
-        // PUT: api/User/5
-        [HttpPut]
-        [Route("Update")]
-        public async Task<MessageModel<string>> Put([FromBody] BlogArticle BlogArticle)
-        {
-            var data = new MessageModel<string>();
-            if (BlogArticle != null && BlogArticle.bID > 0)
-            {
-                var model = await _blogArticleServices.QueryById(BlogArticle.bID);
-
-                if (model != null)
-                {
-                    model.btitle = BlogArticle.btitle;
-                    model.bcategory = BlogArticle.bcategory;
-                    model.bsubmitter = BlogArticle.bsubmitter;
-                    model.bcontent = BlogArticle.bcontent;
-                    data.success = await _blogArticleServices.Update(model);
-                    if (data.success)
-                    {
-                        data.msg = "更新成功";
-                        data.response = BlogArticle?.bID.ObjToString();
-                    }
-                }
-
-            }
-
-            return data;
-        }
-
         /// <summary>
         /// apache jemeter 压力测试
         /// 更新接口

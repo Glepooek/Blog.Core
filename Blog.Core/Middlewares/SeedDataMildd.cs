@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Common;
-using Blog.Core.Model.Models;
+using Blog.Core.Model.Seed;
 using log4net;
 using Microsoft.AspNetCore.Builder;
 using System;
@@ -7,7 +7,7 @@ using System;
 namespace Blog.Core.Extensions
 {
     /// <summary>
-    /// Cors 启动服务
+    /// 生成种子数据中间件服务
     /// </summary>
     public static class SeedDataMildd
     {

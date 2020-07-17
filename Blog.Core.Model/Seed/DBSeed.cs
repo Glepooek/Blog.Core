@@ -14,16 +14,7 @@ namespace Blog.Core.Model.Seed
 {
     public class DBSeed
     {
-        // 这是我的在线demo数据，比较多，且杂乱
-        // gitee 源数据
         private static string SeedDataFolder = "BlogCore.Data.json/{0}.tsv";
-
-
-        // 这里我把重要的权限数据提出来的精简版，默认一个Admin_Role + 一个管理员用户，
-        // 然后就是菜单+接口+权限分配，注意没有其他博客信息了，下边seeddata 的时候，删掉即可。
-
-        // gitee 源数据
-        private static string SeedDataFolderMini = "BlogCore.Mini.Data.json/{0}.tsv";
 
 
         /// <summary>
@@ -42,7 +33,6 @@ namespace Blog.Core.Model.Seed
                 }
 
                 SeedDataFolder = Path.Combine(WebRootPath, SeedDataFolder);
-                SeedDataFolderMini = Path.Combine(WebRootPath, SeedDataFolderMini);
 
                 Console.WriteLine("************ Blog.Core DataBase Set *****************");
                 Console.WriteLine($"Is multi-DataBase: {Appsettings.app(new string[] { "MutiDBEnabled" })}");
@@ -125,15 +115,15 @@ namespace Blog.Core.Model.Seed
                     #endregion
 
 
-                    #region Module
+                    #region Modules
                     if (!await myContext.Db.Queryable<Modules>().AnyAsync())
                     {
-                        myContext.GetEntityDB<Modules>().InsertRange(JsonHelper.ParseFormByJson<List<Modules>>(FileHelper.ReadFile(string.Format(SeedDataFolder, "Module"), Encoding.UTF8)));
-                        Console.WriteLine("Table:Module created success!");
+                        myContext.GetEntityDB<Modules>().InsertRange(JsonHelper.ParseFormByJson<List<Modules>>(FileHelper.ReadFile(string.Format(SeedDataFolder, "Modules"), Encoding.UTF8)));
+                        Console.WriteLine("Table:Modules created success!");
                     }
                     else
                     {
-                        Console.WriteLine("Table:Module already exists...");
+                        Console.WriteLine("Table:Modules already exists...");
                     }
                     #endregion
 
@@ -249,7 +239,7 @@ namespace Blog.Core.Model.Seed
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("1、如果使用的是Mysql，生成的数据库字段字符集可能不是utf8的，手动修改下，或者尝试方案：删掉数据库，在连接字符串后加上CharSet=UTF8mb4，重新生成数据库. \n 2、其他错误：" + ex.Message);
             }
         }
     }

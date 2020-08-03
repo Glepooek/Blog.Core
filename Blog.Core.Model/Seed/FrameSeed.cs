@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace Blog.Core.Model.Seed
 {
@@ -596,17 +597,18 @@ namespace " + strNameSpace + @"
             var ls = IDbFirst.IsCreateDefaultValue().IsCreateAttribute()
 
                   .SettingClassTemplate(p => p =
-@"using Blog.Core.IRepository" + (isMuti ? "." + ConnId + "" : "") + @";
+@"
 using Blog.Core.IServices" + (isMuti ? "." + ConnId + "" : "") + @";
 using Blog.Core.Model.Models" + (isMuti ? "." + ConnId + "" : "") + @";
 using Blog.Core.Services.BASE;
+using Blog.Core.IRepository.Base;
 
 namespace " + strNameSpace + @"
 {
-    public partial class {ClassName}Services : BaseServices<{ClassName}>, I{ClassName}Services" + (string.IsNullOrEmpty(strInterface) ? "" : (" , " + strInterface)) + @"
+    public class {ClassName}Services : BaseServices<{ClassName}>, I{ClassName}Services" + (string.IsNullOrEmpty(strInterface) ? "" : (" , " + strInterface)) + @"
     {
-        private readonly I{ClassName}Repository _dal;
-        public {ClassName}Services(I{ClassName}Repository dal)
+        private readonly IBaseRepository<{ClassName}> _dal;
+        public {ClassName}Services(IBaseRepository<{ClassName}> dal)
         {
             this._dal = dal;
             base.BaseDal = dal;
@@ -638,7 +640,7 @@ namespace " + strNameSpace + @"
                 {
                     Directory.CreateDirectory(strPath);
                 }
-                File.WriteAllText(fileFullPath, item.Value);
+                File.WriteAllText(fileFullPath, item.Value, Encoding.UTF8);
             }
         }
         #endregion

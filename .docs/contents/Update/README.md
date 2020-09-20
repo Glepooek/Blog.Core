@@ -1,6 +1,18 @@
 ﻿
 ## 更新日志
 
+### 2020-09-18
+
+项目更新：更新项目模板 `Update Blog.Core.Webapi.Template.2.2.3.nupkg`  。    
+> 1、增加 `Redis` 消息队列功能；   
+
+
+
+### 2020-09-04
+
+项目更新：增加 `Redis` 消息队列功能；  
+
+
 ### 2020-08-06
 
 项目更新：更新项目模板 `Update Blog.Core.Webapi.Template.2.2.0.nupkg`  。    

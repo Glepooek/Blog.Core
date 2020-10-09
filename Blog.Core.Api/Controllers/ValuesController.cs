@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Blog.Core.Common;
 using Blog.Core.Common.HttpContextUser;
 using Blog.Core.Common.HttpRestSharp;
@@ -14,6 +10,10 @@ using Blog.Core.Model.Models;
 using Blog.Core.Model.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace Blog.Core.Controllers
 {
@@ -36,7 +36,6 @@ namespace Blog.Core.Controllers
         private readonly IUser _user;
         private readonly IPasswordLibServices _passwordLibServices;
         private readonly IBlogApi _blogApi;
-        private readonly IRedisBasketRepository _redisBasketRepository;
         private readonly IDoubanApi _doubanApi;
         readonly IBlogArticleServices _blogArticleServices;
 
@@ -51,24 +50,27 @@ namespace Blog.Core.Controllers
         /// <param name="user"></param>
         /// <param name="passwordLibServices"></param>
         /// <param name="blogApi"></param>
-        /// <param name="redisBasketRepository"></param>
         /// <param name="doubanApi"></param>
-        public ValuesController(IBlogArticleServices blogArticleServices, IMapper mapper, IAdvertisementServices advertisementServices, Love love, IRoleModulePermissionServices roleModulePermissionServices, IUser user, IPasswordLibServices passwordLibServices
+        public ValuesController(IBlogArticleServices blogArticleServices
+            , IMapper mapper
+            , IAdvertisementServices advertisementServices
+            , Love love
+            , IRoleModulePermissionServices roleModulePermissionServices
+            , IUser user, IPasswordLibServices passwordLibServices
             , IBlogApi blogApi
-            , IRedisBasketRepository redisBasketRepository
             , IDoubanApi doubanApi)
         {
             // 测试 Authorize 和 mapper
             _mapper = mapper;
             _advertisementServices = advertisementServices;
             _love = love;
+            _roleModulePermissionServices = roleModulePermissionServices;
             // 测试 Httpcontext
             _user = user;
             // 测试多库
             _passwordLibServices = passwordLibServices;
             // 测试http请求
             _blogApi = blogApi;
-            _redisBasketRepository = redisBasketRepository;
             _doubanApi = doubanApi;
             // 测试AOP加载顺序，配合 return
             _blogArticleServices = blogArticleServices;
@@ -132,9 +134,9 @@ namespace Blog.Core.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task RedisMq()
+        public async Task RedisMq([FromServices] IRedisBasketRepository _redisBasketRepository)
         {
-            var msg = "这里是一条日志";
+            var msg = $"这里是一条日志{DateTime.Now}";
             await _redisBasketRepository.ListLeftPushAsync(RedisMqKey.Loging, msg);
         }
 

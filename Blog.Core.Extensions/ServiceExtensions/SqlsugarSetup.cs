@@ -46,7 +46,7 @@ namespace Blog.Core.Extensions
                         ConnectionString = m.Connection,
                         DbType = (DbType)m.DbType,
                         IsAutoCloseConnection = true,
-                        IsShardSameThread = false,
+                        IsShardSameThread = true,
                         AopEvents = new AopEvents
                         {
                             OnLogExecuting = (sql, p) =>
@@ -64,11 +64,23 @@ namespace Blog.Core.Extensions
                         },
                         MoreSettings = new ConnMoreSettings()
                         {
+                            //IsWithNoLockQuery = true,
                             IsAutoRemoveDataCache = true
                         },
                         // 从库
                         SlaveConnectionConfigs = listConfig_Slave,
-                        //InitKeyType = InitKeyType.SystemTable
+                        // 自定义特性
+                        ConfigureExternalServices = new ConfigureExternalServices()
+                        {
+                            EntityService = (property, column) =>
+                            {
+                                if (column.IsPrimarykey && property.PropertyType == typeof(int))
+                                {
+                                    column.IsIdentity = true;
+                                }
+                            }
+                        },
+                        InitKeyType = InitKeyType.Attribute
                     }
                    );
                 });
